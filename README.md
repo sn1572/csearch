@@ -27,3 +27,7 @@ Now we want to know what header file declared "glUniform1d". This time we use:
 ./csource -h -d /usr/include glUniform
 ```
 The only difference with the previous example is `-h` which uses header mode. `-c` has a similar effect. Note that you can use any combination of available modes, eg. `-c -h` is valid but might be a little confusing.
+
+### Recursive mode
+
+Just set the `-r`, `-R`, or `--recursive` flags.
