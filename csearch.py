@@ -97,7 +97,7 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser(
 		allow_abbrev=True,
 		description=descr)
-	parser.add_argumen(('--recursive', '-r', '-R',
+	parser.add_argument('--recursive', '-r', '-R',
 		action='store_true',
 		default=False,
 		help="Recursive mode. Causes subdirectories to be searched.")
