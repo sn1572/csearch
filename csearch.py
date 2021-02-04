@@ -23,7 +23,7 @@ def _search(fname, token, format_string):
 
 
 def _nm_search(fname, token):
-	format_string = 'nm -D -C {} | grep -n {}'.format(fname, token)
+	format_string = 'nm -D -C {} 2> /dev/null | grep -n {}'.format(fname, token)
 	_search(fname, token, format_string)
 
 
