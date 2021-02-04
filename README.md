@@ -1,5 +1,6 @@
 # csearch
 CLI tool for finding symbols in C source files.
+![A sample image.](https://github.gatech.edu/mbolding3/csearch/blob/master/csearch.PNG?raw=true)
 
 ## Installation
 
