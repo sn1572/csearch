@@ -7,7 +7,7 @@ CLI tool for finding symbols in C source files.
 git clone https://github.gatech.edu/mbolding3/csearch.git
 ```
 
-No dependencies beyond the Python 3 standard libraries.
+No dependencies beyond the Python 3 standard libraries (and Bash).
 
 ## Example usage
 
