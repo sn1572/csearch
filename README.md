@@ -3,7 +3,7 @@ CLI tool for finding symbols in C source files.
 
 A few examples:
 
-It can be used to locate symbols contained in object files:
+It can be used to locate (obscure) symbols contained in (obscure) object files:
 
 ![Sample image 1](https://github.com/sn1572/csearch/blob/master/pics/csearch-3.PNG?raw=true)
 
