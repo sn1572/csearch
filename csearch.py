@@ -40,12 +40,12 @@ def _check_regex(string, regex):
 
 
 def _is_c_header(fname):
-	r = re.compile(r'\.(?P<extension>((h)|(hpp)))(\.|$)')
+	r = re.compile(r'\.(?P<extension>((h)|(hpp)))$')
 	return(_check_regex(fname, r))
 
 
 def _is_c_source(fname):
-	r = re.compile(r'\.(?P<extension>((c)|(cu)|(cpp)))(\.|$)')
+	r = re.compile(r'\.(?P<extension>((c)|(cu)|(cpp)))$')
 	return(_check_regex(fname, r))
 
 
