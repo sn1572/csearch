@@ -17,7 +17,7 @@ It can be used to locate declarations in header files (ioctl is not declared in 
 git clone https://github.gatech.edu/mbolding3/csearch.git
 ```
 
-No dependencies beyond the Python 3 standard libraries (and Bash).
+No dependencies beyond the Python 3 standard libraries, `bash`, `cat`, `nm`, and `grep`.
 
 ## Example usage
 
