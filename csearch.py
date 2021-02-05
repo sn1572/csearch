@@ -113,11 +113,11 @@ def main():
 		action='store_true',
 		default=False,
 		help='Header mode. Searches C/C++/Cuda header files for a symbol.')
-	parser.add_argument('--directory', '-d',
+	parser.add_argument('--target', '-t',
 		action='store',
 		type=str,
 		default='.',
-		help='Directory of object files to search')
+		help='Directory or file to search.')
 	parser.add_argument('symbol',
 		metavar='symbol',
 		type=str,
