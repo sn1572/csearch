@@ -16,16 +16,16 @@ No dependencies beyond the Python 3 standard libraries (and Bash).
 
 Let's say you're looking for a symbol named "glUniform1d". Try:
 ```
-./csource -o -d /lib glUniform1d
+./csource -o -t /lib glUniform1d
 ```
 **explanation**
-`-o` indicates "object mode" which searches for symbols defined in .o, .so, and .a files. `-d /lib` specifies that the seach directory is /lib. `glUniform1d` is the pattern to grep for. The pattern follows all the rules of grep, so putting `glUniform` in this field will fill your screeen with all the various symbols whose name starts with glUniform (there are a lot).
+`-o` indicates "object mode" which searches for symbols defined in .o, .so, and .a files. `-t /lib` specifies that the seach target is the directory /lib. `glUniform1d` is the pattern to grep for. The pattern follows all the rules of grep, so putting `glUniform` in this field will fill your screeen with all the various symbols whose name starts with glUniform (there are a lot).
 
 ### C source and header file mode
 
 Now we want to know what header file declared "glUniform1d". This time we use:
 ```
-./csource -h -d /usr/include glUniform
+./csource -h -t /usr/include glUniform
 ```
 **explanation**
 The only difference with the previous example is `-h` which uses header mode. `-c` searches through `.c`, `.cu`, and `.cpp` files. Note that you can use any combination of available modes, eg. `-c -h` is valid but might be a little confusing.
