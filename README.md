@@ -34,10 +34,10 @@ Let's say you're looking for a symbol named "glUniform1d". Try:
 
 Now we want to know what header file declared "glUniform1d". This time we use:
 ```
-./csource -h -t /usr/include glUniform
+./csource -he -t /usr/include glUniform
 ```
 **explanation**
-The only difference with the previous example is `-h` which uses header mode. `-c` searches through `.c`, `.cu`, and `.cpp` files. Note that you can use any combination of available modes, eg. `-c -h` is valid but might be a little confusing.
+The only difference with the previous example is `-he` which uses header mode. `-c` searches through `.c`, `.cu`, and `.cpp` files. Note that you can use any combination of available modes, eg. `-c -h` is valid but might be a little confusing.
 
 ### Recursive mode
 
