@@ -1,6 +1,12 @@
 # csearch
 CLI tool for finding symbols in C source files.
+
+A few examples:
+
+It can be used to locate symbols contained in object files:
 ![Sample image 1](https://github.com/sn1572/csearch/blob/master/pics/csearch.PNG?raw=true)
+
+It can be used to locate declarations in header files.
 ![Sample image 2](https://github.com/sn1572/csearch/blob/master/pics/csearch-2.PNG?raw=true)
 
 ## Installation
