@@ -124,7 +124,7 @@ def main():
 		nargs='+',
 		help='symbol to find')
 	args = parser.parse_args()
-	directory = os.path.abspath(args.directory)
+	target = os.path.abspath(args.target)
 	symbol = args.symbol[0]
 	o_mode = args.object
 	s_mode = args.source
@@ -134,11 +134,11 @@ def main():
 		raise Exception("Must select a mode of operation (-s or -o)")
 
 	if o_mode:
-		object_main(directory, symbol, r)
+		object_main(target, symbol, r)
 	if s_mode:
-		source_main(directory, symbol, r)
+		source_main(target, symbol, r)
 	if h_mode:
-		header_main(directory, symbol, r)
+		header_main(target, symbol, r)
 
 
 if __name__ == '__main__':
