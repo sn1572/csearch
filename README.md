@@ -5,7 +5,7 @@ A few examples:
 
 It can be used to locate symbols contained in object files:
 
-![Sample image 1](https://github.com/sn1572/csearch/blob/master/pics/csearch.PNG?raw=true)
+![Sample image 1](https://github.com/sn1572/csearch/blob/master/pics/csearch-3.PNG?raw=true)
 
 It can be used to locate declarations in header files:
 
