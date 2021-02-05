@@ -65,7 +65,7 @@ def _search_directory(dname, token, type_check_fun, search_fun, r):
 			_search_directory(thing, token, type_check_fun, search_fun, r)
 
 
-def main(name, token, type_check_fun, search_fun, r):
+def search_main(name, token, type_check_fun, search_fun, r):
 	if os.path.isfile(name):
 		if type_check_fun(name):
 			search_fun(name, token)
@@ -78,18 +78,18 @@ def main(name, token, type_check_fun, search_fun, r):
 
 
 def object_main(name, token, r):
-	main(name, token, _is_object_file, _nm_search, r)
+	search_main(name, token, _is_object_file, _nm_search, r)
 
 
 def source_main(name, token, r):
-	main(name, token, _is_c_source, _cat_search, r)
+	search_main(name, token, _is_c_source, _cat_search, r)
 
 
 def header_main(name, token, r):
-	main(name, token, _is_c_header, _cat_search, r)
+	search_main(name, token, _is_c_header, _cat_search, r)
 
 
-if __name__ == '__main__':
+def main():
 	descr = '''
 	Utility for locating symbols in C/C++ object files (on Linux).
 	'''
@@ -139,3 +139,7 @@ if __name__ == '__main__':
 		source_main(directory, symbol, r)
 	if h_mode:
 		header_main(directory, symbol, r)
+
+
+if __name__ == '__main__':
+	main()
