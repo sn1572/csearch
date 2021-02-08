@@ -6,30 +6,54 @@ import argparse
 
 # Bash colors
 RED = '\033[0;31m'
+GREEN = '\033[0;32m'
 NC  = '\033[0m'
 
 
-def _search(fname, token, format_string, split_on=''):
+def _search(fname, token, search_string, display_func):
 	try:
-		out = sub.check_output(format_string, shell=1)
+		out = sub.check_output(search_string, shell=1)
 		out = out.decode('utf-8')
-		out = out.split(split_on)
-		for line in out:
-			if token in line:
-				print("{}{}{}: {}".format(RED, fname, NC, line))
+		display_func(out)
 	except sub.CalledProcessError:
 		# grep errors if it doesn't find anything
 		pass
 
 
 def _nm_search(fname, token):
-	format_string = 'nm -D -C {} 2> /dev/null | grep -n {}'.format(fname, token)
-	_search(fname, token, format_string)
+
+	def nm_display_func(string):
+		split  = string.split()
+		for word in split:
+			if token in word:
+				print("{}{}{}: {}".format(RED, fname, NC, line))
+		
+	search_string = 'nm -D -C {} 2> /dev/null | grep -n \"{}\"'.format(fname, token)
+	_search(fname, token, search_string, nm_display_func)
 
 
 def _cat_search(fname, token):
-	format_string = 'cat {} | grep -n {}'.format(fname, token)
-	_search(fname, token, format_string, '\n')
+	cat_re = re.compile(r"""
+		^(?P<line_no>(\d*)):
+		(?P<stuff1>(.*))
+		(?P<token>({}))
+		(?P<stuff2>(.*))
+		""".format(token),
+		re.VERBOSE)
+
+	def cat_display_func(string):
+		lines = string.split('\n')
+		for line in lines:
+			m = cat_re.search(line)
+			if m:
+				line_no = m.group('line_no')
+				stuff1 = m.group('stuff1')
+				stuff2 = m.group('stuff2')
+				print("{}{}{}: {}{}{}: {}{}{}{}{}".format(RED, fname, NC, 
+					GREEN, line_no, NC, stuff1, RED, token, NC, stuff2))
+
+	search_string = 'cat {} | grep -n \"{}\"'.format(fname, token)
+	_search(fname, token, search_string, cat_display_func)
 
 
 def _check_regex(string, regex):
