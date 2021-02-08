@@ -9,11 +9,11 @@ RED = '\033[0;31m'
 NC  = '\033[0m'
 
 
-def _search(fname, token, format_string):
+def _search(fname, token, format_string, split_on=''):
 	try:
 		out = sub.check_output(format_string, shell=1)
 		out = out.decode('utf-8')
-		out = out.split()
+		out = out.split(split_on)
 		for line in out:
 			if token in line:
 				print("{}{}{}: {}".format(RED, fname, NC, line))
@@ -29,7 +29,7 @@ def _nm_search(fname, token):
 
 def _cat_search(fname, token):
 	format_string = 'cat {} | grep -n {}'.format(fname, token)
-	_search(fname, token, format_string)
+	_search(fname, token, format_string, '\n')
 
 
 def _check_regex(string, regex):
