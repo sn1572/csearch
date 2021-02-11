@@ -9,7 +9,7 @@ It can be used to locate (obscure) symbols contained in (obscure) object files:
 
 It can be used to locate declarations in header files (ioctl is not declared in ioctl.h, it turns out):
 
-![Sample image 2](https://github.com/sn1572/csearch/blob/master/pics/csearch-2.PNG?raw=true)
+![Sample image 2](https://github.com/sn1572/csearch/blob/master/pics/csearch-4.PNG?raw=true)
 
 ## Installation
 
