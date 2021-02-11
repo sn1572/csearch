@@ -35,5 +35,11 @@ class Test_Type_Check_Funs(unittest.TestCase):
 		self.assertEqual(c._is_c_source('trailing_characters.c.deb'), False)
 
 
+class Test_Clean(unittest.TestCase):
+
+	def test_clean(self):
+		self.assertEqual(c._clean('read('), 'read\(')
+
+
 if __name__ == '__main__':
 	unittest.main()
