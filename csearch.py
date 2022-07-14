@@ -39,9 +39,10 @@ def _nm_search(fname, token):
         split  = string.split()
         for word in split:
             if token in word:
-                print("{}{}{}: {}".format(RED, fname, NC, line))
+                print("{}{}{}: {}".format(RED, fname, NC, word))
         
-    search_string = 'nm -D -C {} 2> /dev/null | grep -n \"{}\"'.format(fname, token)
+    search_string = ("nm -D -C {} 2> /dev/null "
+                     "| grep -n \"{}\"".format(fname, token))
     _search(fname, token, search_string, nm_display_func)
 
 
@@ -63,7 +64,7 @@ def _cat_search(fname, token):
                 stuff1 = m.group('stuff1')
                 stuff2 = m.group('stuff2')
                 print("{}{}{}: {}{}{}: {}{}{}{}{}".format(RED, fname, NC, 
-                    GREEN, line_no, NC, stuff1, RED, token, NC, stuff2))
+                      GREEN, line_no, NC, stuff1, RED, token, NC, stuff2))
 
     search_string = 'cat {} | grep -n \"{}\"'.format(fname, token)
     _search(fname, token, search_string, cat_display_func)
