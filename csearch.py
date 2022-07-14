@@ -70,7 +70,7 @@ def catsearch(fname, token):
         re.VERBOSE)
     display_func = lambda string: cat_display_func(fname, token, string)
     search_string = 'cat {} | grep -n \"{}\"'.format(fname, token)
-    search(fname, token, search_string, cat_display_func)
+    search(fname, token, search_string, display_func)
 
 
 def check_regex(string, regex):
