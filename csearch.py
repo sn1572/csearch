@@ -10,9 +10,9 @@ GREEN = '\033[0;32m'
 NC  = '\033[0m'
 
 
-def _clean(string):
+def clean(string):
     '''
-    prepares string for insertion into _cat_search regex.
+    prepares string for insertion into catsearch regex.
     '''
     escape_chars = ".^$*+?{}[]|()"
     replace_chars = ['\.', '\^', '\$', '\*', '\+', '\?',
@@ -23,7 +23,7 @@ def _clean(string):
     return(out)
 
 
-def _search(fname, token, search_string, display_func):
+def search(fname, token, search_string, display_func):
     try:
         out = sub.check_output(search_string, shell=1)
         out = out.decode('utf-8')
@@ -40,21 +40,21 @@ def nm_display_func(fname, token, string):
             print("{}{}{}: {}".format(RED, fname, NC, word))
 
 
-def _nm_search(fname, token):
+def nmsearch(fname, token):
     display_func = lambda string: nm_display_func(fname, token, string)
     for flag in ("-D", ""):
         search_string = (f"nm {flag} --defined-only -C -l {fname} 2> "
                          f"/dev/null | grep -n \"{token}\"")
-        _search(fname, token, search_string, display_func)
+        search(fname, token, search_string, display_func)
 
 
-def _cat_search(fname, token):
+def catsearch(fname, token):
     cat_re = re.compile(r"""
         ^(?P<line_no>(\d*)):
         (?P<stuff1>(.*))
         (?P<token>({}))
         (?P<stuff2>(.*))
-        """.format(_clean(token)),
+        """.format(clean(token)),
         re.VERBOSE)
 
     def cat_display_func(string):
@@ -69,32 +69,32 @@ def _cat_search(fname, token):
                       GREEN, line_no, NC, stuff1, RED, token, NC, stuff2))
 
     search_string = 'cat {} | grep -n \"{}\"'.format(fname, token)
-    _search(fname, token, search_string, cat_display_func)
+    search(fname, token, search_string, cat_display_func)
 
 
-def _check_regex(string, regex):
+def check_regex(string, regex):
     m = regex.search(string)
     if m:
         return(True)
     return(False)
 
 
-def _is_c_header(fname):
+def is_c_header(fname):
     r = re.compile(r'\.(?P<extension>((h)|(hpp)))$')
-    return(_check_regex(fname, r))
+    return(check_regex(fname, r))
 
 
-def _is_c_source(fname):
+def is_c_source(fname):
     r = re.compile(r'\.(?P<extension>((c)|(cu)|(cpp)))$')
-    return(_check_regex(fname, r))
+    return(check_regex(fname, r))
 
 
-def _is_object_file(fname):
+def is_object_file(fname):
     r = re.compile(r'\.(?P<extension>((so)|(a)|(o)))(\.|$)')
-    return(_check_regex(fname, r))
+    return(check_regex(fname, r))
 
 
-def _search_directory(dname, token, type_check_fun, search_fun, r):
+def search_directory(dname, token, type_check_fun, search_fun, r):
     contents = os.listdir(dname)
     for thing in contents:
         thing = os.path.join(dname, thing)
@@ -102,7 +102,7 @@ def _search_directory(dname, token, type_check_fun, search_fun, r):
             if type_check_fun(thing):
                 search_fun(thing, token)
         elif (r and os.path.isdir(thing)):
-            _search_directory(thing, token, type_check_fun, search_fun, r)
+            search_directory(thing, token, type_check_fun, search_fun, r)
 
 
 def search_main(name, token, type_check_fun, search_fun, r):
@@ -112,21 +112,21 @@ def search_main(name, token, type_check_fun, search_fun, r):
         else:
             raise TypeError("Incorrect file type.")
     elif os.path.isdir(name):
-        _search_directory(name, token, type_check_fun, search_fun, r)
+        search_directory(name, token, type_check_fun, search_fun, r)
     else:
         raise TypeError("Must be a directory or file.")
 
 
 def object_main(name, token, r):
-    search_main(name, token, _is_object_file, _nm_search, r)
+    search_main(name, token, is_object_file, nmsearch, r)
 
 
 def source_main(name, token, r):
-    search_main(name, token, _is_c_source, _cat_search, r)
+    search_main(name, token, is_c_source, catsearch, r)
 
 
 def header_main(name, token, r):
-    search_main(name, token, _is_c_header, _cat_search, r)
+    search_main(name, token, is_c_header, catsearch, r)
 
 
 def main():
