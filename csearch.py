@@ -33,17 +33,18 @@ def _search(fname, token, search_string, display_func):
         pass
 
 
-def _nm_search(fname, token):
+def nm_display_func(fname, token, string):
+    split  = string.split()
+    for word in split:
+        if token in word:
+            print("{}{}{}: {}".format(RED, fname, NC, word))
 
-    def nm_display_func(string):
-        split  = string.split()
-        for word in split:
-            if token in word:
-                print("{}{}{}: {}".format(RED, fname, NC, word))
-        
+
+def _nm_search(fname, token):
+    display_func = lambda string: nm_display_func(fname, token, string)
     search_string = ("nm -D -C {} 2> /dev/null "
                      "| grep -n \"{}\"".format(fname, token))
-    _search(fname, token, search_string, nm_display_func)
+    _search(fname, token, search_string, display_func)
 
 
 def _cat_search(fname, token):
