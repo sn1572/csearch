@@ -48,7 +48,7 @@ def nmsearch(fname, token):
         search(fname, token, search_string, display_func)
 
 
-def cat_display_func(fname, token, string):
+def cat_display_func(fname, token, string, cat_re):
     lines = string.split('\n')
     for line in lines:
         m = cat_re.search(line)
@@ -68,7 +68,8 @@ def catsearch(fname, token):
         (?P<stuff2>(.*))
         """.format(clean(token)),
         re.VERBOSE)
-    display_func = lambda string: cat_display_func(fname, token, string)
+    display_func = lambda string: cat_display_func(fname, token, string,
+                                                   cat_re)
     search_string = 'cat {} | grep -n \"{}\"'.format(fname, token)
     search(fname, token, search_string, display_func)
 
