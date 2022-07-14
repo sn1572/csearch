@@ -42,7 +42,7 @@ def nm_display_func(fname, token, string):
 
 def _nm_search(fname, token):
     display_func = lambda string: nm_display_func(fname, token, string)
-    search_string = ("nm -D -C {} 2> /dev/null "
+    search_string = ("nm --defined-only -C {} 2> /dev/null "
                      "| grep -n \"{}\"".format(fname, token))
     _search(fname, token, search_string, display_func)
 
