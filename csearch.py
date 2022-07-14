@@ -48,6 +48,18 @@ def nmsearch(fname, token):
         search(fname, token, search_string, display_func)
 
 
+def cat_display_func(fname, token, string):
+    lines = string.split('\n')
+    for line in lines:
+        m = cat_re.search(line)
+        if m:
+            line_no = m.group('line_no')
+            stuff1 = m.group('stuff1')
+            stuff2 = m.group('stuff2')
+            print("{}{}{}: {}{}{}: {}{}{}{}{}".format(RED, fname, NC, 
+                  GREEN, line_no, NC, stuff1, RED, token, NC, stuff2))
+
+
 def catsearch(fname, token):
     cat_re = re.compile(r"""
         ^(?P<line_no>(\d*)):
@@ -56,18 +68,7 @@ def catsearch(fname, token):
         (?P<stuff2>(.*))
         """.format(clean(token)),
         re.VERBOSE)
-
-    def cat_display_func(string):
-        lines = string.split('\n')
-        for line in lines:
-            m = cat_re.search(line)
-            if m:
-                line_no = m.group('line_no')
-                stuff1 = m.group('stuff1')
-                stuff2 = m.group('stuff2')
-                print("{}{}{}: {}{}{}: {}{}{}{}{}".format(RED, fname, NC, 
-                      GREEN, line_no, NC, stuff1, RED, token, NC, stuff2))
-
+    display_func = lambda string: cat_display_func(fname, token, string)
     search_string = 'cat {} | grep -n \"{}\"'.format(fname, token)
     search(fname, token, search_string, cat_display_func)
 
