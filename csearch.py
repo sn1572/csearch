@@ -15,8 +15,8 @@ def clean(string):
     prepares string for insertion into catsearch regex.
     '''
     escape_chars = ".^$*+?{}[]|()"
-    replace_chars = ['\.', '\^', '\$', '\*', '\+', '\?',
-        '\{', '\}', '\[', '\]', '\|', '\(', '\)'] 
+    replace_chars = ['.', '^', '$', '*', '+', '?',
+        '{', '}', '[', ']', '|', '(', ')'] 
     out = string
     for og, replace in zip(escape_chars, replace_chars):
         out = out.replace(og, replace)
@@ -173,7 +173,7 @@ def main():
     h_mode = args.header
     r = args.recursive
     if not (o_mode or s_mode or h_mode):
-        raise Exception("Must select a mode of operation (-s or -o)")
+        raise Exception("Must select a mode of operation (-s, -o, -h, etc)")
 
     if o_mode:
         object_main(target, symbol, r)
